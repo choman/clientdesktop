@@ -45,7 +45,8 @@ sudo apt-fast dist-upgrade -y
 #   - tmux
 #   - terminix
 printf "\nInstalling user apps\n"
-sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix
+sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
+                         recordmydesktop
 
 
 
