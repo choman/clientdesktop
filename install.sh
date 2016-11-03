@@ -34,7 +34,9 @@ sudo apt-fast dist-upgrade -y
 #   - chrome
 #   - tor
 #   - desktop recorders
-sudo apt-fast install -y google-chrome-stable
+#   - tmux
+#   - terminix
+sudo apt-fast install -y google-chrome-stable tmux
 
 
 #
