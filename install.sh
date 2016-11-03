@@ -7,6 +7,7 @@ PPAS=(
    "ppa:libreoffice/ppa"
    "ppa:saiarcot895/myppa"
    "ppa:git-core/ppa"
+   "ppa:webupd8team/tor-browser"
   )
 
 
@@ -36,7 +37,7 @@ sudo apt-fast dist-upgrade -y
 #   - desktop recorders
 #   - tmux
 #   - terminix
-sudo apt-fast install -y google-chrome-stable tmux
+sudo apt-fast install -y google-chrome-stable tmux tor-browser
 
 
 #
