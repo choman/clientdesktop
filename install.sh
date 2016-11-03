@@ -20,6 +20,7 @@ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-ke
 
 #
 # install apt-fast
+#   - need to automate install and config of apt-fast
 sudo apt update
 sudo apt install -y apt-fast di axel build-essential
 sudo apt-fast dist-upgrade -y
