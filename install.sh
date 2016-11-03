@@ -6,6 +6,7 @@
 PPAS=(
    "ppa:libreoffice/ppa"
    "ppa:saiarcot895/myppa"
+   "ppa:git-core/ppa"
   )
 
 
