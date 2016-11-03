@@ -7,8 +7,8 @@ NNOTE: you may need to install git first
 
 #
 # Install/Clone Commands
-sudo apt update && sudo apt install -y git
-git clone https://github.com/choman/clientdesktop.git
+* sudo apt update && sudo apt install -y git
+* git clone https://github.com/choman/clientdesktop.git
 
 
 
