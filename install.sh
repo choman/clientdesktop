@@ -20,6 +20,7 @@ PPAS=(
    "ppa:webupd8team/tor-browser"
    "ppa:webupd8team/terminix"
    "ppa:maarten-baert/simplescreenrecorder"
+   "ppa:shutter/ppa"
   )
 
 
@@ -65,7 +66,7 @@ sudo cp -pv /usr/share/bash-completion/completions/apt-fast /etc/bash_completion
 #   - terminix
 printf "\nInstalling user apps\n"
 sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
-                         gtk-recordmydesktop simplescreenrecorder kazam
+                         gtk-recordmydesktop simplescreenrecorder kazam shutter
 
 
 
