@@ -1,5 +1,15 @@
 #!/bin/bash
-
+#######################################################################
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#######################################################################
 
 #
 # Add ppas
@@ -9,7 +19,12 @@ PPAS=(
    "ppa:git-core/ppa"
    "ppa:webupd8team/tor-browser"
    "ppa:webupd8team/terminix"
+   "ppa:maarten-baert/simplescreenrecorder"
   )
+
+
+printf "Please enter the admin passwd: "
+sudo echo ""
 
 
 printf "\nInstalling PPA(s):\n"
@@ -33,6 +48,10 @@ sudo apt update
 sudo apt install -y apt-fast di axel build-essential
 sudo apt-fast dist-upgrade -y
 
+printf "\nConfiguring apt-fast\n"
+sudo cp -pv /usr/share/bash-completion/completions/apt-fast /etc/bash_completion.d
+
+
 #
 # determine vbox version
 #   - place holder
@@ -46,7 +65,7 @@ sudo apt-fast dist-upgrade -y
 #   - terminix
 printf "\nInstalling user apps\n"
 sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
-                         recordmydesktop
+                         gtk-recordmydesktop simplescreenrecorder kazam
 
 
 
