@@ -23,7 +23,7 @@ PPAS=(
   )
 
 
-printf "Please enter the admin passwd: "
+printf "Please enter the admin passwd: \n"
 sudo echo ""
 
 
