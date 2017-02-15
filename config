@@ -1,0 +1,21 @@
+#!/bin/bash
+#######################################################################
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#######################################################################
+
+ppas:
+  - ppa:libreoffice/ppa
+  - ppa:saiarcot895/myppa
+  - ppa:git-core/ppa
+  - ppa:webupd8team/tor-browser
+  - ppa:webupd8team/terminix
+  - ppa:maarten-baert/simplescreenrecorder
+  - ppa:shutter/ppa
