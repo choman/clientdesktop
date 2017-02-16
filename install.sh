@@ -50,6 +50,7 @@ sudo apt install -y di axel aria2 git build-essential
 
 # quickest way to add and configure apt-fast
 if [ ! -x /usr/bin/apt-fast ]; then 
+   git submodule update --init
    sudo cp apt-fast/apt-fast /usr/bin
    sudo chmod +x /usr/bin/apt-fast
    if [ -f files/apt-fast.conf ]; then
@@ -64,7 +65,7 @@ if [ ! -x /usr/bin/apt-fast ]; then
    . /etc/bash_completion
 
    # install apt-fast completions (zsh)
-   sudo cp apt-fast/completions/zsh/apt-fast /usr/share/zsh/functions/Completion/Debian/
+   sudo cp apt-fast/completions/zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/
    sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
    # source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 fi
