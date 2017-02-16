@@ -11,17 +11,28 @@
 #
 #######################################################################
 
-#
-# Add ppas
-PPAS=(
-   "ppa:libreoffice/ppa"
-   "ppa:saiarcot895/myppa"
-   "ppa:git-core/ppa"
-   "ppa:webupd8team/tor-browser"
-   "ppa:webupd8team/terminix"
-   "ppa:maarten-baert/simplescreenrecorder"
-   "ppa:shutter/ppa"
-  )
+function parse_yaml() {
+    local prefix=$2
+    local s
+    local w
+    local fs
+    s='[[:space:]]*'
+    w='[a-zA-Z0-9_]*'
+    fs="$(echo @|tr @ '\034')"
+    sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s[:-]$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
+    awk -F"$fs" '{
+       indent = length($1)/2;
+       vname[indent] = $2;
+       for (i in vname) {if (i > indent) {delete vname[i]}}
+           if (length($3) > 0) {
+               vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+               printf("%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, $3);
+           }
+    }' | sed 's/_=/+=/g'
+}
+
+eval $(parse_yaml config "CONFIG_")
 
 
 printf "Please enter the admin passwd: \n"
@@ -29,7 +40,7 @@ sudo echo ""
 
 
 printf "\nInstalling PPA(s):\n"
-for i in ${PPAS[@]}; do
+for i in ${CONFIG_ppas[@]}; do
     printf  "  - Adding ppa: $i...  "
     sudo apt-add-repository -y $i 2> /dev/null
 done
@@ -61,6 +72,7 @@ if [ ! -x /usr/bin/apt-fast ]; then
 
    # install apt-fast completions (bash)
    sudo cp apt-fast/completions/bash/apt-fast /etc/bash_completion.d/
+   sudo cp apt-fast/completions/bash/apt-fast /usr/share/bash-completion/completions/apt-fast
    sudo chown root:root /etc/bash_completion.d/apt-fast
    . /etc/bash_completion
 
@@ -72,13 +84,11 @@ fi
 
 sudo apt-fast dist-upgrade -y
 
-printf "\nConfiguring apt-fast\n"
-sudo cp -pv /usr/share/bash-completion/completions/apt-fast /etc/bash_completion.d
-
-
 #
 # determine vbox version
 #   - place holder
+
+
 
 #
 # install extra software, ppas should be installed above.  see PPAS
@@ -90,7 +100,6 @@ sudo cp -pv /usr/share/bash-completion/completions/apt-fast /etc/bash_completion
 printf "\nInstalling user apps\n"
 sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam shutter
-
 
 
 #
