@@ -11,6 +11,7 @@
 #
 #######################################################################
 
+
 ppas:
   - ppa:libreoffice/ppa
   - ppa:saiarcot895/myppa
@@ -19,4 +20,7 @@ ppas:
   - ppa:webupd8team/terminix
   - ppa:maarten-baert/simplescreenrecorder
   - ppa:shutter/ppa
-
+  - chrome: 
+      url: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+      sfile: /etc/apt/sources.list.d/google.list
+      key: https://dl-ssl.google.com/linux/linux_signing_key.pub

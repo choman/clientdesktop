@@ -32,25 +32,61 @@ function parse_yaml() {
     }' | sed 's/_=/+=/g'
 }
 
-eval $(parse_yaml config "CONFIG_")
+function parse_yaml2() {
+    local prefix=$2
+    local s
+    local w
+    local fs
+    s='[[:space:]]*'
+    w='[a-zA-Z0-9_]*'
+    fs="$(echo @|tr @ '\034')"
+    sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s[:-]$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
+    awk -F"$fs" '{
+      indent = length($1)/2;
+      if (length($2) == 0) { conj[indent]="+";} else {conj[indent]="";}
+      vname[indent] = $2;
+      for (i in vname) {if (i > indent) {delete vname[i]}}
+      if (length($3) > 0) {
+              vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+              printf("%s%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, conj[indent-1],$3);
+      }
+    }' | sed 's/_=/+=/g'
+}
 
+eval parse_yaml2 config "CONFIG_"
+eval $(parse_yaml2 config "CONFIG_")
+
+
+##if $DEBUG; then
+##    for i in ${CONFIG_ppas[@]}; do
+##        if [[ $i == ppa* ]]; then
+##            echo "PPA = $i"
+##        else
+##            echo "Setting up: $i"
+##            echo "  - $CONFIG_ppas___url"
+##            echo "  - $CONFIG_ppas___sfile"
+##            echo "  - $CONFIG_ppas___key"
+##        fi
+##    done
+##    exit
+##fi
 
 printf "Please enter the admin passwd: \n"
 sudo echo ""
 
-
 printf "\nInstalling PPA(s):\n"
 for i in ${CONFIG_ppas[@]}; do
-    printf  "  - Adding ppa: $i...  "
-    sudo apt-add-repository -y $i 2> /dev/null
+    if [[ $i == ppa* ]]; then
+        printf  "  - Adding ppa: $i...  "
+        sudo apt-add-repository -y $i 2> /dev/null
+    else
+        printf  "  - Adding ppa: $i...  "
+        sudo sh -c "echo '$CONFIG_ppas___url' > $CONFIG_ppas___sfile"
+        echo "  - getting key $CONFIG_ppas___key"
+        wget -q -O - $CONFIG_ppas___key | sudo apt-key add -
+    fi
 done
-
-
-# setup chrome ppa
-printf "\nInstalling manual PPA(s):\n"
-printf  "  - Adding ppa: chrome-browser...  "
-sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 
 #
 # install apt-fast
