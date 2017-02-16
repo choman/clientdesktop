@@ -50,14 +50,23 @@ sudo apt install -y di axel aria2 git build-essential
 
 # quickest way to add and configure apt-fast
 if [ ! -x /usr/bin/apt-fast ]; then 
-   git clone https://github.com/ilikenwf/apt-fast /tmp/apt-fast
-   sudo cp /tmp/apt-fast/apt-fast /usr/bin
+   sudo cp apt-fast/apt-fast /usr/bin
    sudo chmod +x /usr/bin/apt-fast
-   if [ -f apt-fast.conf ]; then
-       sudo cp apt-fast.conf /etc
+   if [ -f files/apt-fast.conf ]; then
+       sudo cp files/apt-fast.conf /etc
    else
-       sudo cp /tmp/apt-fast/apt-fast.conf /etc
+       sudo cp apt-fast/apt-fast.conf /etc
    fi
+
+   # install apt-fast completions (bash)
+   sudo cp apt-fast/completions/bash/apt-fast /etc/bash_completion.d/
+   sudo chown root:root /etc/bash_completion.d/apt-fast
+   . /etc/bash_completion
+
+   # install apt-fast completions (zsh)
+   sudo cp apt-fast/completions/zsh/apt-fast /usr/share/zsh/functions/Completion/Debian/
+   sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
+   # source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 fi
 
 sudo apt-fast dist-upgrade -y

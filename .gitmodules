@@ -1,0 +1,3 @@
+[submodule "apt-fast"]
+	path = apt-fast
+	url = https://github.com/ilikenwf/apt-fast
