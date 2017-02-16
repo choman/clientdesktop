@@ -46,7 +46,20 @@ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-ke
 #   - need to automate install and config of apt-fast
 printf "\nInstalling base apps\n"
 sudo apt update
-sudo apt install -y apt-fast di axel build-essential
+sudo apt install -y di axel aria2 git build-essential
+
+# quickest way to add and configure apt-fast
+if [ ! -x /usr/bin/apt-fast ]; then 
+   git clone https://github.com/ilikenwf/apt-fast /tmp/apt-fast
+   sudo cp /tmp/apt-fast/apt-fast /usr/bin
+   sudo chmod +x /usr/bin/apt-fast
+   if [ -f apt-fast.conf ]; then
+       sudo cp apt-fast.conf /etc
+   else
+       sudo cp /tmp/apt-fast/apt-fast.conf /etc
+   fi
+fi
+
 sudo apt-fast dist-upgrade -y
 
 printf "\nConfiguring apt-fast\n"
