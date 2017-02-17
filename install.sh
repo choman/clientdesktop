@@ -138,6 +138,11 @@ sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam \
                          shutter filebeat
 
+#config logstash
+sudo cp files/filebeat.yml /etc/filebeat/filebeat.yml
+sudo sed -i -e "s/LOGSTASH/$CONFIG_logstash__server/" /etc/filebeat/filebeat.yml
+
+
 
 #
 # Setup chrome to run android apps

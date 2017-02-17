@@ -28,3 +28,8 @@ ppas:
       url: deb https://packages.elastic.co/beats/apt stable main
       sfile: /etc/apt/sources.list.d/beats.list
       key: https://packages.elastic.co/GPG-KEY-elasticsearch
+
+
+logstash:
+   server: 10.0.2.5
+   
