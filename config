@@ -24,3 +24,7 @@ ppas:
       url: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
       sfile: /etc/apt/sources.list.d/google.list
       key: https://dl-ssl.google.com/linux/linux_signing_key.pub
+  - filebeats: 
+      url: deb https://packages.elastic.co/beats/apt stable main
+      sfile: /etc/apt/sources.list.d/beats.list
+      key: https://packages.elastic.co/GPG-KEY-elasticsearch

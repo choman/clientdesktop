@@ -135,7 +135,8 @@ sudo apt-fast dist-upgrade -y
 #   - terminix
 printf "\nInstalling user apps\n"
 sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
-                         gtk-recordmydesktop simplescreenrecorder kazam shutter
+                         gtk-recordmydesktop simplescreenrecorder kazam \
+                         shutter filebeat
 
 
 #
