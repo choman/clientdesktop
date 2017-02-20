@@ -75,6 +75,11 @@ eval $(parse_yaml2 config "CONFIG_")
 printf "Please enter the admin passwd: \n"
 sudo echo ""
 
+
+if [ -f /var/lib/dpkg/lock ]; then
+    sudo rm /var/lib/dpkg/lock
+fi
+
 printf "\nInstalling PPA(s):\n"
 for i in ${CONFIG_ppas[@]}; do
     if [[ $i == ppa* ]]; then
@@ -92,19 +97,23 @@ done
 # install apt-fast
 #   - need to automate install and config of apt-fast
 printf "\nInstalling base apps\n"
-sudo apt update
-sudo apt install -y di axel aria2 git build-essential
+sudo apt-get update
+sudo apt-get install -y di axel aria2 git build-essential
 
 # quickest way to add and configure apt-fast
 if [ ! -x /usr/bin/apt-fast ]; then 
    git submodule update --init
    sudo cp apt-fast/apt-fast /usr/bin
    sudo chmod +x /usr/bin/apt-fast
+
    if [ -f files/apt-fast.conf ]; then
+       echo "installing: files/apt-fast.conf --> /etc"
        sudo cp files/apt-fast.conf /etc
    else
+       echo "installing: apt-fast/apt-fast.conf --> /etc"
        sudo cp apt-fast/apt-fast.conf /etc
    fi
+
 
    # install apt-fast completions (bash)
    sudo cp apt-fast/completions/bash/apt-fast /etc/bash_completion.d/
@@ -117,6 +126,7 @@ if [ ! -x /usr/bin/apt-fast ]; then
    sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
    # source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 fi
+
 
 sudo apt-fast dist-upgrade -y
 
