@@ -11,27 +11,6 @@
 #
 #######################################################################
 
-function parse_yaml() {
-    local prefix=$2
-    local s
-    local w
-    local fs
-    s='[[:space:]]*'
-    w='[a-zA-Z0-9_]*'
-    fs="$(echo @|tr @ '\034')"
-    sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s[:-]$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
-    awk -F"$fs" '{
-       indent = length($1)/2;
-       vname[indent] = $2;
-       for (i in vname) {if (i > indent) {delete vname[i]}}
-           if (length($3) > 0) {
-               vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-               printf("%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, $3);
-           }
-    }' | sed 's/_=/+=/g'
-}
-
 function parse_yaml2() {
     local prefix=$2
     local s
@@ -57,7 +36,6 @@ function parse_yaml2() {
 eval parse_yaml2 config "CONFIG_"
 eval $(parse_yaml2 config "CONFIG_")
 
-
 ##if $DEBUG; then
 ##    for i in ${CONFIG_ppas[@]}; do
 ##        if [[ $i == ppa* ]]; then
@@ -80,16 +58,41 @@ if [ -f /var/lib/dpkg/lock ]; then
     sudo rm /var/lib/dpkg/lock
 fi
 
+IFS=""
 printf "\nInstalling PPA(s):\n"
 for i in ${CONFIG_ppas[@]}; do
     if [[ $i == ppa* ]]; then
         printf  "  - Adding ppa: $i...  "
         sudo apt-add-repository -y $i 2> /dev/null
     else
-        printf  "  - Adding ppa: $i...  "
-        sudo sh -c "echo '$CONFIG_ppas___url' > $CONFIG_ppas___sfile"
-        echo "  - getting key $CONFIG_ppas___key"
-        wget -q -O - $CONFIG_ppas___key | sudo apt-key add -
+        appname=$(echo $i | sed -e 's/://' -e 's/[[:space:]]*$//')
+
+        # get app info
+        printf  "  - Parsing ppa: $appname...  \n"
+        eval myvar=( \${CONFIG_ppas_$appname[@]} )
+        url=""
+        sfile=""
+        item=""
+        var=""
+        key=""
+        for z in ${myvar[@]}; do
+           eval var=$(echo $z | awk -F: '{print $1}')
+           len=$(expr ${#var} + 1)
+           item=$(echo ${z:$len} | sed -e 's/^[[:space:]]//')
+           if [[ $var == key ]]; then
+              key=$item
+           else
+              if [[ $var == url ]]; then
+                 url=$item
+              else
+                 sfile=$item
+              fi
+           fi
+        done
+
+        printf  "  - Adding ppa: $appname...  "
+        sudo sh -c "echo '$url' > $sfile"
+        wget -q -O - $key | sudo apt-key add -
     fi
 done
 
