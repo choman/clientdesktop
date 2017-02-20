@@ -136,7 +136,7 @@ sudo apt-fast dist-upgrade -y
 printf "\nInstalling user apps\n"
 sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam \
-                         shutter filebeat
+                         shutter filebeat scrot
 
 #config logstash
 sudo cp files/filebeat.yml /etc/filebeat/filebeat.yml
