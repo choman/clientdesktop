@@ -68,13 +68,16 @@ for i in ${CONFIG_ppas[@]}; do
         appname=$(echo $i | sed -e 's/://' -e 's/[[:space:]]*$//')
 
         # get app info
-        printf  "  - Parsing ppa: $appname...  \n"
+        # make debug statement
+        #printf  "  - Parsing ppa: $appname...  \n"
+
         eval myvar=( \${CONFIG_ppas_$appname[@]} )
         url=""
         sfile=""
         item=""
         var=""
         key=""
+
         for z in ${myvar[@]}; do
            eval var=$(echo $z | awk -F: '{print $1}')
            len=$(expr ${#var} + 1)
