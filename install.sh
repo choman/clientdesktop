@@ -155,6 +155,8 @@ sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
                          shutter filebeat scrot ssh
 
 #config logstash
+CURL curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
+
 sudo mkdir -p /etc/pki/tls/certs
 sudo cp files/filebeat.yml /etc/filebeat/filebeat.yml
 sudo cp files/logstash-filebeats.crt /etc/pki/tls/certs/logstash-filebeats.crt
