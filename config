@@ -11,18 +11,19 @@
 #
 #######################################################################
 
+##j  - ppa:libreoffice/ppa
+##j  - ppa:saiarcot895/myppa
+##j  - ppa:git-core/ppa
+##j  - ppa:webupd8team/tor-browser
+##j  - ppa:webupd8team/terminix
+##j  - ppa:mhsabbagh/greenproject
+##j  - ppa:maarten-baert/simplescreenrecorder
+##j  - ppa:shutter/ppa
+##j  - chrome: 
+
 # NOTE: This section is very whitespace angry,
 #       in future need whitespace friendly
 ppas:
-  - ppa:libreoffice/ppa
-  - ppa:saiarcot895/myppa
-  - ppa:git-core/ppa
-  - ppa:webupd8team/tor-browser
-  - ppa:webupd8team/terminix
-  - ppa:mhsabbagh/greenproject
-  - ppa:maarten-baert/simplescreenrecorder
-  - ppa:shutter/ppa
-  - chrome: 
   - filebeats: 
   chrome:
     - url: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
