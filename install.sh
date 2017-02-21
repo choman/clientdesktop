@@ -152,7 +152,7 @@ sudo apt-fast dist-upgrade -y
 printf "\nInstalling user apps\n"
 sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam \
-                         shutter filebeat scrot
+                         shutter filebeat scrot ssh
 
 #config logstash
 sudo mkdir -p /etc/pki/tls/certs
