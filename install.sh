@@ -157,7 +157,7 @@ sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
 #config logstash
 sudo mkdir -p /etc/pki/tls/certs
 sudo cp files/filebeat.yml /etc/filebeat/filebeat.yml
-sudo cp files/logstash-forwarder.crt /etc/pki/tls/certs/logstash-forwarder.crt
+sudo cp files/logstash-filebeats.crt /etc/pki/tls/certs/logstash-filebeats.crt
 sudo sed -i -e "s/LOGSTASH/$CONFIG_logstash__server/" /etc/filebeat/filebeat.yml
 
 sudo systemctl restart filebeat
