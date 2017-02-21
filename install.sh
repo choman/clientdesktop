@@ -150,16 +150,18 @@ sudo apt-fast dist-upgrade -y
 #   - tmux
 #   - terminix
 printf "\nInstalling user apps\n"
-sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
-                         gtk-recordmydesktop simplescreenrecorder kazam \
-                         shutter filebeat scrot ssh
+##sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
+##                         gtk-recordmydesktop simplescreenrecorder kazam \
+##                         shutter filebeat scrot ssh
+
+sudo apt-fast install -y tmux  filebeat
 
 #config logstash
 CURL curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
 
 sudo mkdir -p /etc/pki/tls/certs
 sudo cp files/filebeat.yml /etc/filebeat/filebeat.yml
-sudo cp files/logstash-filebeats.crt /etc/pki/tls/certs/logstash-filebeats.crt
+sudo cp files/logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 sudo sed -i -e "s/LOGSTASH/$CONFIG_logstash__server/" /etc/filebeat/filebeat.yml
 
 sudo systemctl restart filebeat
