@@ -160,6 +160,10 @@ sudo cp files/filebeat.yml /etc/filebeat/filebeat.yml
 sudo cp files/logstash-forwarder.crt /etc/pki/tls/certs/logstash-forwarder.crt
 sudo sed -i -e "s/LOGSTASH/$CONFIG_logstash__server/" /etc/filebeat/filebeat.yml
 
+sudo systemctl restart filebeat
+sudo systemctl enable filebeat
+
+
 #
 # Setup chrome to run android apps
 
