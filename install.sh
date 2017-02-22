@@ -167,7 +167,9 @@ sudo sed -i -e "s/LOGSTASH/$CONFIG_logstash__server/" /etc/filebeat/filebeat.yml
 sudo systemctl restart filebeat
 sudo systemctl enable filebeat
 
-
+#
+# configure freeipa
+sudo cp files/krb5.conf /etc
 echo "$CONFIG_freeipa__ip     $CONFIG_freeipa__fqdn $CONFIG_freeipa__hostname" | sudo tee -a /etc/hosts
 domain=${CONFIG_freeipa__fqdn#.}
 sudo ipa-client-install -N --hostname $CONFIG_freeipa__fqdn  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w abcd1234  --force-join
