@@ -150,11 +150,13 @@ sudo apt-fast dist-upgrade -y
 #   - tmux
 #   - terminix
 printf "\nInstalling user apps\n"
-##sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
-##                         gtk-recordmydesktop simplescreenrecorder kazam \
-##                         shutter filebeat scrot ssh
 
-sudo apt-fast install -y tmux  filebeat
+
+sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
+                         gtk-recordmydesktop simplescreenrecorder kazam \
+                         shutter filebeat scrot ssh
+
+# install freeipa client stuff
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-admintools
 
 #config logstash
