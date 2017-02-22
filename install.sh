@@ -159,6 +159,12 @@ sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
 # install freeipa client stuff
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-admintools
 
+
+# first attempt at diabling screen lock
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+##gsettings set org.gnome.desktop.session idle-delay 0 # <seconds> (0 to disable)
+
+
 #config logstash
 CURL curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
 
