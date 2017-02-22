@@ -21,7 +21,7 @@
 ##j  - ppa:shutter/ppa
 ##j  - chrome: 
 
-# NOTE: This section is very whitespace angry,
+# NOTE: This file is very whitespace angry,
 #       in future need whitespace friendly
 ppas:
   - filebeats: 
@@ -37,4 +37,9 @@ ppas:
 
 logstash:
    server: 10.0.2.5
+
+freeipa:
+   ip:       10.0.2.5
+   hostname: ipa
+   fqdn:     ipa.example.com
    

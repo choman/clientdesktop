@@ -168,6 +168,11 @@ sudo systemctl restart filebeat
 sudo systemctl enable filebeat
 
 
+echo "$CONFIG_freeipa__ip     $CONFIG_freeipa__fqdn $CONFIG_freeipa__hostname" | sudo tee -a /etc/hosts
+domain=${CONFIG_freeipa__fqdn#.}
+sudo ipa-client-install -N --hostname $CONFIG_freeipa__fqdn  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w abcd1234  --force-join
+
+
 #
 # Setup chrome to run android apps
 
