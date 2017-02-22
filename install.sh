@@ -154,7 +154,7 @@ printf "\nInstalling user apps\n"
 ##                         gtk-recordmydesktop simplescreenrecorder kazam \
 ##                         shutter filebeat scrot ssh
 
-sudo apt-fast install -y tmux  filebeat
+sudo apt-fast install -y tmux  filebeat freeipa-client freeipa-admintools
 
 #config logstash
 CURL curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
