@@ -109,26 +109,26 @@ sudo apt-get install -y di axel aria2 git build-essential
 # quickest way to add and configure apt-fast
 if [ ! -x /usr/bin/apt-fast ]; then 
    git submodule update --init
-   sudo cp apt-fast/apt-fast /usr/bin
+   sudo cp -v apt-fast/apt-fast /usr/bin
    sudo chmod +x /usr/bin/apt-fast
 
    if [ -f files/apt-fast.conf ]; then
        echo "installing: files/apt-fast.conf --> /etc"
-       sudo cp files/apt-fast.conf /etc
+       sudo cp -v files/apt-fast.conf /etc
    else
        echo "installing: apt-fast/apt-fast.conf --> /etc"
-       sudo cp apt-fast/apt-fast.conf /etc
+       sudo cp -v apt-fast/apt-fast.conf /etc
    fi
 
 
    # install apt-fast completions (bash)
-   sudo cp apt-fast/completions/bash/apt-fast /etc/bash_completion.d/
-   sudo cp apt-fast/completions/bash/apt-fast /usr/share/bash-completion/completions/apt-fast
+   sudo cp -v apt-fast/completions/bash/apt-fast /etc/bash_completion.d/
+   sudo cp -v apt-fast/completions/bash/apt-fast /usr/share/bash-completion/completions/apt-fast
    sudo chown root:root /etc/bash_completion.d/apt-fast
    . /etc/bash_completion
 
    # install apt-fast completions (zsh)
-   sudo cp apt-fast/completions/zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/
+   sudo cp -v apt-fast/completions/zsh/_apt-fast /usr/share/zsh/functions/Completion/Debian/
    sudo chown root:root /usr/share/zsh/functions/Completion/Debian/_apt-fast
    # source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 fi
@@ -152,7 +152,7 @@ sudo apt-fast dist-upgrade -y
 printf "\nInstalling user apps\n"
 
 
-sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
+sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam \
                          shutter filebeat scrot ssh autofs green-recorder
 
@@ -169,8 +169,8 @@ gsettings set org.gnome.desktop.screensaver lock-enabled false
 CURL curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
 
 sudo mkdir -p /etc/pki/tls/certs
-sudo cp files/filebeat.yml /etc/filebeat/filebeat.yml
-sudo cp files/logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
+sudo cp -v files/filebeat.yml /etc/filebeat/filebeat.yml
+sudo cp -v files/logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 sudo sed -i -e "s/LOGSTASH/$CONFIG_logstash__server/" /etc/filebeat/filebeat.yml
 
 sudo systemctl restart filebeat
@@ -178,7 +178,7 @@ sudo systemctl enable filebeat
 
 #
 # configure freeipa
-sudo cp files/krb5.conf /etc
+sudo cp -v files/krb5.conf /etc
 echo "$CONFIG_freeipa__ip     $CONFIG_freeipa__fqdn $CONFIG_freeipa__hostname" | sudo tee -a /etc/hosts
 domain=${CONFIG_freeipa__fqdn#.}
 sudo ipa-client-install -N --hostname $CONFIG_freeipa__fqdn  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w abcd1234  --force-join
@@ -209,6 +209,10 @@ if [ $rval -ne 0 ]; then
 fi
 
 sudo pam-auth-update --package
+
+
+#setup automounts
+sudo cp -v files/auto.* /etc
 
 
 #
