@@ -185,6 +185,31 @@ sudo ipa-client-install -N --hostname $CONFIG_freeipa__fqdn  --mkhomedir --domai
 
 
 #
+# setup pam 
+
+pam_session="/var/lib/pam/session"
+common_session="/etc/pam.d/common-session"
+
+grep mkhomedir $pam_session > /dev/null 2>&1
+rval=$?
+
+if [ $rval -ne 0 ]; then
+   echo "updating: $pam_session"
+   echo "Module: mkhomedir" | sudo tee -a $pam_session
+   echo "optional			pam_mkhomedir.so" | sudo tee -a $pam_session
+
+fi
+
+grep mkhomedir $common_session > /dev/null 2>&1
+rval=$?
+
+if [ $rval -ne 0 ]; then
+    line="session optional			pam_mkhomedir.so"
+    sudo sed -i "/systemd/a$line" $common_session
+fi
+
+
+#
 # Setup chrome to run android apps
 
 
