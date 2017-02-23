@@ -214,6 +214,7 @@ sudo pam-auth-update --package
 
 #setup automounts
 sudo cp -v files/auto.* /etc
+sudo cp -v files/50* /etc/lightdm/lightdm.conf.d
 
 
 #
