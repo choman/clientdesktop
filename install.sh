@@ -159,13 +159,6 @@ sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
 # install freeipa client stuff
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-admintools
 
-
-# first attempt at diabling screen lock
-sudo gsettings set org.gnome.desktop.screensaver lock-enabled false
-sudo gsettings set org.mate.screensaver lock-enabled false
-##gsettings set org.gnome.desktop.session idle-delay 0 # <seconds> (0 to disable)
-
-
 #config logstash
 CURL curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
 
@@ -219,7 +212,7 @@ sudo cp -v files/50* /etc/lightdm/lightdm.conf.d
 # Update skel diretory
 sudo mkdir -v /etc/skel/Desktop
 sudo ln -s /etc/skel/Desktop/transfer /tansfer
-echo "dconf write /org/mate/screensaver/lock-enabled false" | tee -a /etc/skel/.profile
+echo "dconf write /org/mate/screensaver/lock-enabled false" | sudo tee -a /etc/skel/.profile
 
 
 #
