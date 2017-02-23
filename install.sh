@@ -216,6 +216,11 @@ sudo pam-auth-update --package
 sudo cp -v files/auto.* /etc
 sudo cp -v files/50* /etc/lightdm/lightdm.conf.d
 
+# Update skel diretory
+sudo mkdir -v /etc/skel/Desktop
+sudo ln -s /etc/skel/Desktop/transfer /tansfer
+echo "dconf write /org/mate/screensaver/lock-enabled false" | tee -a /etc/skel/.profile
+
 
 #
 # Setup chrome to run android apps
