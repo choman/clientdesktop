@@ -161,7 +161,8 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-ad
 
 
 # first attempt at diabling screen lock
-gsettings set org.gnome.desktop.screensaver lock-enabled false
+sudo gsettings set org.gnome.desktop.screensaver lock-enabled false
+sudo gsettings set org.mate.screensaver lock-enabled false
 ##gsettings set org.gnome.desktop.session idle-delay 0 # <seconds> (0 to disable)
 
 
