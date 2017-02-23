@@ -208,6 +208,8 @@ if [ $rval -ne 0 ]; then
     sudo sed -i "/systemd/a$line" $common_session
 fi
 
+sudo pam-auth-update --package
+
 
 #
 # Setup chrome to run android apps
