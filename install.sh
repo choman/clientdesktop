@@ -154,7 +154,7 @@ printf "\nInstalling user apps\n"
 
 sudo apt-fast install -y google-chrome-stable tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam \
-                         shutter filebeat scrot ssh autofs
+                         shutter filebeat scrot ssh autofs green-recorder
 
 # install freeipa client stuff
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-admintools
