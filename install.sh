@@ -211,7 +211,7 @@ sudo cp -v files/50* /etc/lightdm/lightdm.conf.d
 
 # Update skel diretory
 sudo mkdir -v /etc/skel/Desktop
-sudo ln -s /etc/skel/Desktop/transfer /tansfer
+sudo ln -s /transfer /etc/skel/Desktop/transfer
 echo "dconf write /org/mate/screensaver/lock-enabled false" | sudo tee -a /etc/skel/.profile
 
 
