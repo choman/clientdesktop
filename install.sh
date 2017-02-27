@@ -162,7 +162,7 @@ sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
 sudo apt-fast install -y filebeat
 
 # update?
-aria2c -x 8 https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-$FB_VERSION}-amd64.deb
+aria2c -x 8 https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FB_VERSION}-amd64.deb
 
 sudo dpkg -i filebeat*deb
 
