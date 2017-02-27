@@ -157,11 +157,13 @@ printf "\nInstalling user apps\n"
 
 sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam \
-                         shutter filebeat scrot ssh autofs green-recorder
+                         shutter vlock scrot ssh autofs green-recorder
 
-sudo apt-fast install -y filebeat
+# install lynis
+git clone https://github.com/CISOfy/lynis $HOME/lynis
+   
 
-# update?
+# download and install filebeat
 aria2c -x 8 https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FB_VERSION}-amd64.deb
 
 sudo dpkg -i filebeat*deb
@@ -224,6 +226,9 @@ sudo mkdir -v /etc/skel/Desktop
 sudo ln -s /transfer /etc/skel/Desktop/transfer
 echo "dconf write /org/mate/screensaver/lock-enabled false" | sudo tee -a /etc/skel/.profile
 
+
+# enable ufw
+sudo ufw enable
 
 #
 # Setup chrome to run android apps
