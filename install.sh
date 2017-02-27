@@ -136,7 +136,6 @@ if [ ! -x /usr/bin/apt-fast ]; then
    # source /usr/share/zsh/functions/Completion/Debian/_apt-fast
 fi
 
-
 sudo apt-fast dist-upgrade -y
 
 #
