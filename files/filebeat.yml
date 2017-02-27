@@ -2,7 +2,7 @@ output:
   logstash:
     enabled: true
     hosts:
-      - ipa:5044
+      - LOGSTASH:5044
     ssl:
       certificate_authorities:
         - /etc/pki/tls/certs/logstash-beats.crt
