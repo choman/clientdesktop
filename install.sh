@@ -11,6 +11,9 @@
 #
 #######################################################################
 
+
+FB_VERSION=5.2.1
+
 function parse_yaml2() {
     local prefix=$2
     local s
@@ -155,6 +158,13 @@ printf "\nInstalling user apps\n"
 sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
                          gtk-recordmydesktop simplescreenrecorder kazam \
                          shutter filebeat scrot ssh autofs green-recorder
+
+sudo apt-fast install -y filebeat
+
+# update?
+aria2c -x 8 https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-$FB_VERSION}-amd64.deb
+
+sudo dpkg -i filebeat*deb
 
 # install freeipa client stuff
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-admintools

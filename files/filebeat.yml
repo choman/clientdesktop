@@ -2,7 +2,7 @@ output:
   logstash:
     enabled: true
     hosts:
-      - 10.0.2.5:5044
+      - ipa:5044
     ssl:
       certificate_authorities:
         - /etc/pki/tls/certs/logstash-beats.crt
@@ -20,3 +20,12 @@ filebeat:
         - "/var/log/nginx/*.log"
       document_type: nginx-access
 
+
+logging:
+  to_files: true
+  files:
+    path: /var/log/mybeat
+    name: mybeat
+  level: info
+
+registry_file: /var/lib/filebeat/registry
