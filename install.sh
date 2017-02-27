@@ -160,7 +160,7 @@ sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-admintools
 
 #config logstash
-CURL curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
+sudo curl -XPUT "http://$CONFIG_logstash__server:9200/_template/filebeat?pretty" -d@/etc/filebeat/filebeat.template.json
 
 sudo mkdir -p /etc/pki/tls/certs
 sudo cp -v files/filebeat.yml /etc/filebeat/filebeat.yml
