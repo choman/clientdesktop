@@ -16,6 +16,14 @@ FB_VERSION=5.2.1
 KEYSFILE=keys
 TOKENFILE=token
 
+function setup_vault() {
+    if [ ! -f /usr/local/bin/vault ]; then 
+        wget -nc -O /tmp/vault.zip https://releases.hashicorp.com/vault/0.6.5/vault_0.6.5_linux_amd64.zip
+        unzip /tmp/vault.zip -d /tmp
+        sudo cp /tmp/vault /usr/local/bin
+    fi
+}
+
 function parse_yaml2() {
     local prefix=$2
     local s
@@ -38,6 +46,7 @@ function parse_yaml2() {
     }' | sed 's/_=/+=/g'
 }
 
+setup_vault
 
 if [ ! -s "$KEYSFILE" ]; then
    echo "please populate keys: $KEYSFILE"
