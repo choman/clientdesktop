@@ -13,6 +13,8 @@
 
 
 FB_VERSION=5.2.1
+KEYSFILE=keys
+TOKENFILE=token
 
 function parse_yaml2() {
     local prefix=$2
@@ -36,8 +38,37 @@ function parse_yaml2() {
     }' | sed 's/_=/+=/g'
 }
 
+
+if [ ! -s "$KEYSFILE" ]; then
+   echo "please populate keys: $KEYSFILE"
+   exit
+fi
+
+if [ ! -s "$TOKENFILE" ]; then
+   echo "please populate token: $TOKENFILE"
+   exit
+fi
+
+# get yaml config
 eval parse_yaml2 config "CONFIG_"
 eval $(parse_yaml2 config "CONFIG_")
+
+# get vault config
+declare -a keys
+readarray -t keys < $KEYSFILE
+
+token=$(cat $TOKENFILE)
+
+export VAULT_ADDR=http://10.0.2.5:8200
+export VAULT_TOKEN=$token
+
+vault unseal ${keys[0]} > /dev/null
+vault unseal ${keys[1]} > /dev/null
+vault unseal ${keys[2]} > /dev/null
+
+freeipa=$(vault read -field=value secret/admin)
+
+#vault seal
 
 ##if $DEBUG; then
 ##    for i in ${CONFIG_ppas[@]}; do
@@ -186,7 +217,7 @@ sudo systemctl enable filebeat
 sudo cp -v files/krb5.conf /etc
 echo "$CONFIG_freeipa__ip     $CONFIG_freeipa__fqdn $CONFIG_freeipa__hostname" | sudo tee -a /etc/hosts
 domain=${CONFIG_freeipa__fqdn#.}
-sudo ipa-client-install -N --hostname $CONFIG_freeipa__fqdn  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w abcd1234  --force-join
+sudo ipa-client-install -N --hostname $CONFIG_freeipa__fqdn  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w $freeipa  --force-join
 
 
 #
