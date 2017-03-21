@@ -14,3 +14,5 @@ For some reason the user's passwds are off.  need to
 # ipa  commands
 
 ipa user-*
+
+passwd needs tweaking, user must set passwd elsewhere
