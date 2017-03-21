@@ -68,7 +68,8 @@ readarray -t keys < $KEYSFILE
 
 token=$(cat $TOKENFILE)
 
-export VAULT_ADDR=http://10.0.2.5:8200
+
+export VAULT_ADDR=http://${CONFIG_freeipa__ip}:8200
 export VAULT_TOKEN=$token
 
 vault unseal ${keys[0]} > /dev/null
