@@ -273,6 +273,7 @@ echo "dconf write /org/mate/screensaver/lock-enabled false" | sudo tee -a /etc/s
 
 # enable ufw
 sudo ufw enable
+sudo ufw allow 88
 
 #
 # Setup chrome to run android apps
