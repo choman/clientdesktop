@@ -46,6 +46,8 @@ function parse_yaml2() {
     }' | sed 's/_=/+=/g'
 }
 
+
+
 setup_vault
 
 if [ ! -s "$KEYSFILE" ]; then
@@ -72,9 +74,11 @@ token=$(cat $TOKENFILE)
 export VAULT_ADDR=http://${CONFIG_freeipa__ip}:8200
 export VAULT_TOKEN=$token
 
-vault unseal ${keys[0]} > /dev/null
-vault unseal ${keys[1]} > /dev/null
-vault unseal ${keys[2]} > /dev/null
+echo ${a/Unseal Key [1-5]: /}
+
+vault unseal ${keys[0]/Unseal Key [1-5]: /} > /dev/null
+vault unseal ${keys[1]/Unseal Key [1-5]: /} > /dev/null
+vault unseal ${keys[2]/Unseal Key [1-5]: /} > /dev/null
 
 freeipa=$(vault read -field=value secret/admin)
 
