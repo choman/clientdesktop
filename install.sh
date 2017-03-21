@@ -18,7 +18,7 @@ TOKENFILE=token
 
 function setup_vault() {
     if [ ! -f /usr/local/bin/vault ]; then 
-        wget -nc -O /tmp/vault.zip https://releases.hashicorp.com/vault/0.6.5/vault_0.6.5_linux_amd64.zip
+        wget -nc -O /tmp/vault.zip https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip
         unzip /tmp/vault.zip -d /tmp
         sudo cp /tmp/vault /usr/local/bin
     fi
