@@ -54,12 +54,12 @@ setup_vault
 
 if [ ! -s "$KEYSFILE" ]; then
    echo "please populate keys: $KEYSFILE"
-#   exit
+   exit
 fi
 
 if [ ! -s "$TOKENFILE" ]; then
    echo "please populate token: $TOKENFILE"
-#   exit
+   exit
 fi
 
 # get yaml config
