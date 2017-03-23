@@ -1,6 +1,8 @@
 * http://techxerl.net/how-to-run-your-favorite-android-apps-on-linux-operating-system/
 
 
+NOTE: need ssh installed
+
 #server fixes?
 http://www.therebel.eu/2015/08/setting-password-expiry-in-ipa/
 
