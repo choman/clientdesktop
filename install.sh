@@ -190,9 +190,13 @@ sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
 
 # install lynis
 git clone https://github.com/CISOfy/lynis $HOME/lynis
-aria2c -x 8 https://github.com/cbednarski/hostess/releases/download/v0.2.0/hostess_linux_amd64
-chmod +x hostess_linux_amd64 
-sudo ./hostess_linux_amd64 add rogue1 127.0.1.1
+
+
+# install hostess
+aria2c -x 8 -d files https://github.com/cbednarski/hostess/releases/download/v0.2.0/hostess_linux_amd64
+sudo cp -v files/hostess_linux_amd64 /usr/local/bin/hostess
+sudo chmod +x /usr/local/bin/hostess
+#sudo hostess add rogue1 127.0.1.1
 
 
 # download and install filebeat
@@ -217,11 +221,13 @@ sudo systemctl enable filebeat
 #
 # configure freeipa
 sudo cp -v files/krb5.conf /etc
-echo "$CONFIG_freeipa__ip     $CONFIG_freeipa__fqdn $CONFIG_freeipa__hostname" | sudo tee -a /etc/hosts
+echo hostess add $CONFIG_freeipa__fqdn $CONFIG_freeipa__ip
+echo hostess add $CONFIG_freeipa__hostname $CONFIG_freeipa__ip
+
 domain=${CONFIG_freeipa__fqdn#*\.}
 
 yes | sudo ipa-client-install -N --hostname rogue1.${domain}  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w $freeipa  --force-join
-sudo ./hostess_linux_amd64 add $CONFIG_logstash__server $CONFIG_freeipa__ip
+sudo hostess add $CONFIG_logstash__server $CONFIG_freeipa__ip
 
 
 #
