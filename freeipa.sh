@@ -114,8 +114,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client freeipa-ad
 # configure freeipa
 sudo cp -v files/krb5.conf /etc
 echo "$CONFIG_freeipa__ip     $CONFIG_freeipa__fqdn $CONFIG_freeipa__hostname" | sudo tee -a /etc/hosts
-domain=${CONFIG_freeipa__fqdn#.}
-yes | sudo ipa-client-install -N --hostname $CONFIG_freeipa__fqdn  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w $freeipa  --force-join
+domain=${CONFIG_freeipa__fqdn#*\.}
+
+yes | sudo ipa-client-install -N --hostname rogue1.${domain}  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w $freeipa  --force-join
 
 
 #
