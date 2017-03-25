@@ -190,7 +190,9 @@ sudo apt-fast install -y google-chrome-stable meld tmux tor-browser terminix \
 
 # install lynis
 git clone https://github.com/CISOfy/lynis $HOME/lynis
-   
+aria2c -x 8 https://github.com/cbednarski/hostess/releases/download/v0.2.0/hostess_linux_amd64
+chmod +x hostess_linux_amd64 
+
 
 # download and install filebeat
 aria2c -x 8 https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FB_VERSION}-amd64.deb
@@ -218,6 +220,7 @@ echo "$CONFIG_freeipa__ip     $CONFIG_freeipa__fqdn $CONFIG_freeipa__hostname" |
 domain=${CONFIG_freeipa__fqdn#*\.}
 
 yes | sudo ipa-client-install -N --hostname rogue1.${domain}  --mkhomedir --domain=$domain --server=$CONFIG_freeipa__fqdn -p admin -w $freeipa  --force-join
+sudo hostess_linux_amd64 add $CONFIG_logstash__server $CONFIG_freeipa__ip
 
 
 #
