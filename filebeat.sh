@@ -56,9 +56,33 @@ fi
 # install apt-fast
 #   - need to automate install and config of apt-fast
 printf "\nUpdating repositories\n"
-sudo apt-get update -qq 2> /dev/null
+sudo apt-get update -qq 2> /dev/null 
 
 #sudo apt-fast dist-upgrade -y
+
+
+dpkg -s filebeat > /dev/null 2>&1
+rval=$?
+
+
+if [ "$rval" -eq 0 ]; then
+
+   iversion=$(dpkg -s filebeat | grep -i version | awk '{print $2}')
+   printf "\n\nFilebeat $iversion is installed"
+
+   if [ $iversion = $FB_VERSION ]; then
+      printf ", exiting\n\n"
+      exit
+   fi
+
+   printf ", upgrading\n\n"
+
+else
+   printf "filebeat not installed, continuing\n\n"
+
+fi
+
+
 
 
 # download and install filebeat
